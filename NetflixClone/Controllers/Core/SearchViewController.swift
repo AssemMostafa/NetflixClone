@@ -26,11 +26,18 @@ class SearchViewController: UIViewController {
         return table
     }()
 
+    // MARK: Pagination
+    var isLoading = false
+     var currentpage: Int = 1
+    fileprivate var lastpage: Int = 1
+    fileprivate var totalpages: Int = 1
+
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        fetchUpcoming()
+        self.isLoading = true
+        fetchUpcoming(currentPage: currentpage)
     }
 
     override func viewDidLayoutSubviews() {
@@ -47,6 +54,8 @@ class SearchViewController: UIViewController {
         view.addSubview(discoverTable)
         discoverTable.dataSource = self
         discoverTable.delegate = self
+        discoverTable.prefetchDataSource = self
+        discoverTable.isPrefetchingEnabled = true
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
     }
@@ -58,11 +67,17 @@ class SearchViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func fetchUpcoming() {
-        APICaller.shared.getDiscoverMovies { [weak self] result in
+    private func fetchUpcoming(currentPage: Int) {
+        APICaller.shared.getDiscoverMovies(currentPage: currentPage) { [weak self] result in
             switch result {
-            case.success(let movies):
-                self?.titles = movies
+            case.success(let response):
+                self?.isLoading = false
+                self?.totalpages = response.total_pages
+                if self?.currentpage != 1 {
+                    self?.titles += response.results
+                } else {
+                    self?.titles = response.results
+                }
                 DispatchQueue.main.async {
                     self?.discoverTable.reloadData()
                 }
@@ -74,7 +89,16 @@ class SearchViewController: UIViewController {
 }
 
 // MARK: TableView DataSource and Delegate
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if indexPath.row >= self.titles.count - 3, currentpage < totalpages, currentpage != totalpages, !self.isLoading {
+                currentpage += 1
+                fetchUpcoming(currentPage: currentpage)
+            }
+        }
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titles.count

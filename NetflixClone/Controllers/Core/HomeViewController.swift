@@ -29,6 +29,12 @@ class HomeViewController: UIViewController {
         return table
     }()
 
+    // MARK: Pagination
+    var isLoading = false
+     var currentpage: Int = 1
+    fileprivate var lastpage: Int = 1
+    fileprivate var totalpages: Int = 1
+
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,10 +190,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             }
 
         case Sections.Upcoming.rawValue:
-            APICaller.shared.getUpcomingMovies { result in
+            APICaller.shared.getUpcomingMovies(currentPage: 1) { result in
                 switch result {
-                case.success(let movies):
-                    cell.configerCell(with: movies)
+                case.success(let response):
+                    cell.configerCell(with: response.results)
                 case .failure(let error):
                     print(error)
                 }

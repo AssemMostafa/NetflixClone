@@ -9,6 +9,8 @@ import Foundation
 
 struct TrendingMovieResponse: Codable{
     let results: [Title]
+    let total_pages: Int
+    let total_results: Int
 }
 
 struct Title: Codable {
