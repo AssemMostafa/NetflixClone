@@ -188,15 +188,23 @@
 			isa = PBXGroup;
 			children = (
 				C89BAB2428D841A3004D1580 /* Info.plist */,
+				C8EFD07E28DD7B7D00FE0484 /* Network */,
 				C886F57728DD72BB008B90D8 /* Common */,
 				C8464B4228DC112300AE3D4C /* Controllers */,
 				C8464B3228DB87E900AE3D4C /* Extentions */,
-				C8464B2F28DAF82C00AE3D4C /* Models */,
-				C8464B2C28DAF42900AE3D4C /* Mangers */,
 				C8464B2728D888FF00AE3D4C /* Views */,
 				C8464B2628D888C700AE3D4C /* ViewModels */,
 			);
 			path = NetflixClone;
+			sourceTree = "<group>";
+		};
+		C8EFD07E28DD7B7D00FE0484 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C8464B2C28DAF42900AE3D4C /* Mangers */,
+				C8464B2F28DAF82C00AE3D4C /* Models */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
