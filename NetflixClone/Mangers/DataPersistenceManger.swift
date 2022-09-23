@@ -18,6 +18,7 @@ class DataPersistenceManger {
     }
     static let shared = DataPersistenceManger()
 
+    // MARK: Save Movie
     func downloadTitle(with model: Title, completion: @escaping (Result<Void, Error>) -> Void) {
 
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -44,6 +45,7 @@ class DataPersistenceManger {
         }
     }
 
+    // MARK: Load Movie
     func fetchingTitlesFromDataBase(completion: @escaping (Result<[TitleItem], Error>) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -60,6 +62,7 @@ class DataPersistenceManger {
         }
     }
 
+    // MARK: Delete Movie
     func deleteTitle(with model: TitleItem, completion: @escaping (Result<Void, Error>) -> Void) {
 
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {

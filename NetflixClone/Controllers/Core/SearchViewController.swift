@@ -10,6 +10,7 @@ import UIKit
  
 class SearchViewController: UIViewController {
 
+    // MARK: Properties and outlets
     private var titles = [Title]()
 
     private let searchController: UISearchController = {
@@ -25,7 +26,7 @@ class SearchViewController: UIViewController {
         return table
     }()
 
-
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -36,7 +37,8 @@ class SearchViewController: UIViewController {
         super.viewDidLayoutSubviews()
         discoverTable.frame = view.bounds
     }
-
+    
+    // MARK: Helper Methods
     private func setupView() {
         title = "Top Search"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -47,6 +49,13 @@ class SearchViewController: UIViewController {
         discoverTable.delegate = self
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
+    }
+    
+    private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel, titleModel: Title) {
+        let vc = TitlePreviewViewController()
+        vc.configure(with: ViewModel)
+        vc.randomTrendingMovie = titleModel
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     private func fetchUpcoming() {
@@ -62,16 +71,9 @@ class SearchViewController: UIViewController {
             }
         }
     }
-
-    private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel, titleModel: Title) {
-        let vc = TitlePreviewViewController()
-        vc.configure(with: ViewModel)
-        vc.randomTrendingMovie = titleModel
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
 }
 
+// MARK: TableView DataSource and Delegate
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,9 +112,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-
 }
-
+// MARK: UISearchResultsUpdating and SearchResultsViewControllerDelegate
 extension SearchViewController: UISearchResultsUpdating, SearchResultsViewControllerDelegate {
     func SearchResultsViewControllerDidTapItem(_ ViewModel: TitlePreviewViewModel, titleModel: Title) {
         DispatchQueue.main.async {
@@ -141,5 +142,4 @@ extension SearchViewController: UISearchResultsUpdating, SearchResultsViewContro
             }
         }
     }
-
 }

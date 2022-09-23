@@ -17,6 +17,7 @@ enum Sections: Int {
 }
 class HomeViewController: UIViewController {
 
+    // MARK: Properties and outlets
 
     private var randomTrendingMovie: Title?
     private var headerView: HeroHeaderView?
@@ -28,11 +29,13 @@ class HomeViewController: UIViewController {
         return table
     }()
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
 
+    // MARK: Helper Methods
     func setupView() {
         self.view.backgroundColor = .systemBackground
         view.addSubview(homeFeedTableView)
@@ -48,7 +51,6 @@ class HomeViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeFeedTableView.frame = view.bounds
-
     }
 
     private func configureHeroHeader() {
@@ -116,13 +118,12 @@ class HomeViewController: UIViewController {
             }
         }
     }
+    // MARK: Actions
 
     @objc func profileButtonPressed(sender: UIButton!) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: "Error", message: "You should login first", preferredStyle: .alert)
-            let dismissAction = UIAlertAction(title: "OK", style: .default) { _ in
-
-            }
+            let dismissAction = UIAlertAction(title: "OK", style: .default) { _ in}
             alert.view.tintColor = .white
             alert.addAction(dismissAction)
             self.present(alert, animated: true)
@@ -134,14 +135,14 @@ class HomeViewController: UIViewController {
             self.tabBarController?.selectedIndex = 1
         }
     }
-
 }
+
+// MARK: TableView DataSource and Delegate
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionTitles.count
-
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -179,7 +180,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.configerCell(with: movies)
                 case .failure(let error):
                     print(error)
-
                 }
             }
 
@@ -235,6 +235,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: CollectionViewTableViewCell Delegate
 
 extension HomeViewController: CollectionViewTableViewCellDelegate {
     func CollectionViewTableViewCellDidTapCell(_cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel) {
@@ -243,6 +244,8 @@ extension HomeViewController: CollectionViewTableViewCellDelegate {
         }
     }
 }
+
+// MARK: HeroHeaderView Delegate
 
 extension HomeViewController: HeroHeaderViewDelegate {
     func userDidTapOnPlayButton() {

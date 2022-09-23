@@ -9,6 +9,8 @@ import UIKit
 
 class UpComingViewController: UIViewController {
 
+    // MARK: Properties and outlets
+
     private var titles = [Title]()
 
     private let upComingTable: UITableView = {
@@ -17,6 +19,7 @@ class UpComingViewController: UIViewController {
         return table
     }()
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -27,7 +30,7 @@ class UpComingViewController: UIViewController {
         super.viewDidLayoutSubviews()
         upComingTable.frame = view.bounds
     }
-
+    // MARK: Helper Methods
     private func setupView() {
         title = "Upcoming"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -59,7 +62,7 @@ class UpComingViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-
+// MARK: TableView DataSource and Delegate
 extension UpComingViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

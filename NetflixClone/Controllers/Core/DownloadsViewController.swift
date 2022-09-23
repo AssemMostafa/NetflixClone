@@ -9,6 +9,7 @@ import UIKit
 
 class DownloadsViewController: UIViewController {
 
+    // MARK: Properties and outlets
     private var titles = [TitleItem]()
 
     private let downloadedTable: UITableView = {
@@ -16,7 +17,7 @@ class DownloadsViewController: UIViewController {
         table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
         return table
     }()
-
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -27,7 +28,8 @@ class DownloadsViewController: UIViewController {
         super.viewDidLayoutSubviews()
         downloadedTable.frame = view.bounds
     }
-
+    
+    // MARK: Helper Methods
     private func setupView() {
         title = "Downloads"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -47,6 +49,13 @@ class DownloadsViewController: UIViewController {
         vc.isCameFromDownloads = true
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    private func updateTabBar(with count: Int) {
+        if let tabItems = tabBarController?.tabBar.items {
+            let tabItem = tabItems[3]
+            tabItem.badgeValue = "\(count)"
+        }
+    }
 
     private func fetchLocalStorageForDownload() {
         DataPersistenceManger.shared.fetchingTitlesFromDataBase { [weak self] result in
@@ -62,16 +71,9 @@ class DownloadsViewController: UIViewController {
             }
         }
     }
-
-    private func updateTabBar(with count: Int) {
-        if let tabItems = tabBarController?.tabBar.items {
-            let tabItem = tabItems[3]
-            tabItem.badgeValue = "\(count)"
-        }
-    }
-
 }
 
+// MARK: TableView DataSource and Delegate
 extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
