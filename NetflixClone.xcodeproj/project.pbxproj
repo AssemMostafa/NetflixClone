@@ -33,6 +33,7 @@
 		C8A561CC28DC315F0056B9E6 /* YoutubeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A561CB28DC315F0056B9E6 /* YoutubeResponse.swift */; };
 		C8A561F228DC73530056B9E6 /* NetflixCloneModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8A561F028DC73530056B9E6 /* NetflixCloneModel.xcdatamodeld */; };
 		C8A561F428DC7DC10056B9E6 /* DataPersistenceManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A561F328DC7DC10056B9E6 /* DataPersistenceManger.swift */; };
+		C8EFD08228DDDF5100FE0484 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFD08128DDDF5100FE0484 /* UIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		C8A561CB28DC315F0056B9E6 /* YoutubeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeResponse.swift; sourceTree = "<group>"; };
 		C8A561F128DC73530056B9E6 /* NetflixCloneModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetflixCloneModel.xcdatamodel; sourceTree = "<group>"; };
 		C8A561F328DC7DC10056B9E6 /* DataPersistenceManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPersistenceManger.swift; sourceTree = "<group>"; };
+		C8EFD08128DDDF5100FE0484 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 			children = (
 				C8464B3328DB880B00AE3D4C /* String.swift */,
 				C8464B3928DB90B700AE3D4C /* UIImageView.swift */,
+				C8EFD08128DDDF5100FE0484 /* UIViewController.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				C8A561CC28DC315F0056B9E6 /* YoutubeResponse.swift in Sources */,
 				C886F57628DD7236008B90D8 /* ApiConfig.swift in Sources */,
 				C8464B2B28DAE27500AE3D4C /* HeroHeaderView.swift in Sources */,
+				C8EFD08228DDDF5100FE0484 /* UIViewController.swift in Sources */,
 				C8464B2E28DAF44800AE3D4C /* APICaller.swift in Sources */,
 				C8A561F228DC73530056B9E6 /* NetflixCloneModel.xcdatamodeld in Sources */,
 				C8464B3828DB8E8D00AE3D4C /* TitleCollectionViewCell.swift in Sources */,

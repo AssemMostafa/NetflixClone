@@ -56,8 +56,6 @@ class APICaller {
             }
             do{
                 let results = try JSONDecoder().decode(TrendingMovieResponse.self, from: data)
-                print(results.results)
-                print(currentPage)
                 completion(.success(results))
             } catch {
                 completion(.failure(APIError.faildToGetData))

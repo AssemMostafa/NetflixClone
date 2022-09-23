@@ -109,7 +109,9 @@ class TitlePreviewViewController: UIViewController {
             case .success():
                 NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
             case .failure(let error) :
-                print(error)
+                DispatchQueue.main.async {
+                    self.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }

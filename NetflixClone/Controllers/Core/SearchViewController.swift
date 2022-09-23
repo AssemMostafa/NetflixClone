@@ -82,7 +82,9 @@ class SearchViewController: UIViewController {
                     self?.discoverTable.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }
@@ -132,7 +134,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
                     strongSelf.navigateToTitlePreviewVC(with: viewModel, titleModel: title)
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }
@@ -162,7 +166,9 @@ extension SearchViewController: UISearchResultsUpdating, SearchResultsViewContro
                     resultsController.searchResultcollectionView.reloadData()
                 }
             case .failure(let error) :
-                print(error)
+                DispatchQueue.main.async {
+                    self.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }

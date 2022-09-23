@@ -70,7 +70,9 @@ class HomeViewController: UIViewController {
                     self?.headerView?.configure(with: TitleViewModel(posterURL: selectedTitle?.poster_path, titleName: selectedTitle?.original_title ?? ""))
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }
@@ -107,7 +109,9 @@ class HomeViewController: UIViewController {
             case .success():
                 NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
             case .failure(let error) :
-                print(error)
+                DispatchQueue.main.async {
+                    self.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }
@@ -120,19 +124,18 @@ class HomeViewController: UIViewController {
                     self?.updateTabBar(with: titles.count)
                 }
             case .failure(let error) :
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }
     // MARK: Actions
 
     @objc func profileButtonPressed(sender: UIButton!) {
+        let message = "You should login first"
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Error", message: "You should login first", preferredStyle: .alert)
-            let dismissAction = UIAlertAction(title: "OK", style: .default) { _ in}
-            alert.view.tintColor = .white
-            alert.addAction(dismissAction)
-            self.present(alert, animated: true)
+            self.showAlertmessage(with: message)
         }
     }
 
@@ -167,7 +170,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 case.success(let movies):
                     cell.configerCell(with: movies)
                 case .failure(let error):
-                    print(error)
+                    DispatchQueue.main.async {
+                        self.showAlertmessage(with: error.localizedDescription)
+                    }
                 }
             }
         case Sections.TrendingTV.rawValue:
@@ -176,7 +181,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 case.success(let tvs):
                     cell.configerCell(with: tvs)
                 case .failure(let error):
-                    print(error)
+                    DispatchQueue.main.async {
+                        self.showAlertmessage(with: error.localizedDescription)
+                    }
                 }
             }
         case Sections.Popular.rawValue:
@@ -185,7 +192,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 case.success(let movies):
                     cell.configerCell(with: movies)
                 case .failure(let error):
-                    print(error)
+                    DispatchQueue.main.async {
+                        self.showAlertmessage(with: error.localizedDescription)
+                    }
                 }
             }
 
@@ -195,7 +204,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 case.success(let response):
                     cell.configerCell(with: response.results)
                 case .failure(let error):
-                    print(error)
+                    DispatchQueue.main.async {
+                        self.showAlertmessage(with: error.localizedDescription)
+                    }
                 }
             }
 
@@ -205,7 +216,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 case.success(let movies):
                     cell.configerCell(with: movies)
                 case .failure(let error):
-                    print(error)
+                    DispatchQueue.main.async {
+                        self.showAlertmessage(with: error.localizedDescription)
+                    }
                 }
             }
         default:
@@ -268,7 +281,9 @@ extension HomeViewController: HeroHeaderViewDelegate {
                     strongSelf.navigateToTitlePreviewVC(with: viewModel)
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }

@@ -66,7 +66,9 @@ extension SearchResultsViewController: UICollectionViewDelegate, UICollectionVie
                 let viewModel = TitlePreviewViewModel(title: titleName, youtubeView: videoElement, titleOverView: titleOverview)
                 strongSelf.delegate?.SearchResultsViewControllerDidTapItem(viewModel, titleModel: title)
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }

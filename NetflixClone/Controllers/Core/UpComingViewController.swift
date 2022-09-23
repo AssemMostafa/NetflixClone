@@ -65,7 +65,9 @@ class UpComingViewController: UIViewController {
                     self?.upComingTable.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }
@@ -121,7 +123,9 @@ extension UpComingViewController: UITableViewDelegate, UITableViewDataSource, UI
                     strongSelf.navigateToTitlePreviewVC(with: viewModel, titleModel: title)
                 }
             case .failure(let error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.showAlertmessage(with: error.localizedDescription)
+                }
             }
         }
     }
