@@ -41,6 +41,10 @@ class HomeViewController: UIViewController {
         setupView()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        homeFeedTableView.frame = view.bounds
+    }
     // MARK: Helper Methods
     func setupView() {
         self.view.backgroundColor = .systemBackground
@@ -52,11 +56,6 @@ class HomeViewController: UIViewController {
         configerNavBar()
         configureHeroHeader()
         fetchLocalStorageForDownload()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        homeFeedTableView.frame = view.bounds
     }
 
     private func configureHeroHeader() {

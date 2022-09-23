@@ -17,6 +17,15 @@ class DownloadsViewController: UIViewController {
         table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
         return table
     }()
+
+    private let hintLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.text = "Your Downloads Are Empty"
+        return label
+    }()
+
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +45,8 @@ class DownloadsViewController: UIViewController {
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         view.backgroundColor = .systemBackground
         view.addSubview(downloadedTable)
+        view.addSubview(hintLabel)
+        applyConstrains()
         downloadedTable.dataSource = self
         downloadedTable.delegate = self
         NotificationCenter.default.addObserver(forName: NSNotification.Name("downloaded"), object: nil, queue: nil) { _ in
@@ -43,6 +54,14 @@ class DownloadsViewController: UIViewController {
         }
     }
 
+    private func applyConstrains() {
+        let downloadButtonConstrains = [
+            hintLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hintLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ]
+        NSLayoutConstraint.activate(downloadButtonConstrains)
+    }
+    
     private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel) {
         let vc = TitlePreviewViewController()
         vc.configure(with: ViewModel)
@@ -61,6 +80,13 @@ class DownloadsViewController: UIViewController {
         DataPersistenceManger.shared.fetchingTitlesFromDataBase { [weak self] result in
             switch result {
             case .success(let titles):
+                if self?.titles.isEmpty ?? false && titles.isEmpty {
+                    self?.hintLabel.isHidden = false
+                    self?.downloadedTable.isHidden = true
+                } else {
+                    self?.hintLabel.isHidden = true
+                    self?.downloadedTable.isHidden = false
+                }
                 self?.titles = titles
                 DispatchQueue.main.async {
                     self?.updateTabBar(with: titles.count)
@@ -122,6 +148,7 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
                     self?.titles.remove(at: indexPath.row)
                     self?.updateTabBar(with: self?.titles.count ?? 0)
                     tableView.deleteRows(at: [indexPath], with: .fade)
+                    self?.fetchLocalStorageForDownload()
                 case .failure(let error) :
                     print(error)
                 }

@@ -10,6 +10,7 @@ import WebKit
 
 class TitlePreviewViewController: UIViewController {
 
+    // MARK: Properties and outlets
      var randomTrendingMovie: Title?
     var isCameFromDownloads = false
 
@@ -47,11 +48,13 @@ class TitlePreviewViewController: UIViewController {
         return webView
     }()
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-    
+
+    // MARK: Helper Methods
     private func setupView() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.barTintColor = .white
@@ -116,6 +119,7 @@ class TitlePreviewViewController: UIViewController {
         }
     }
 
+    // MARK: Actions
     @objc func downloadButtonPressed(sender: UIButton!) {
         guard let title = randomTrendingMovie else {
             return

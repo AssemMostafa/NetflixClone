@@ -13,8 +13,10 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
 
 class SearchResultsViewController: UIViewController {
 
+    // MARK: Properties and outlets
     public var titles = [Title]()
     weak var delegate: SearchResultsViewControllerDelegate?
+
     public let searchResultcollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3 - 10, height: 200)
@@ -23,6 +25,8 @@ class SearchResultsViewController: UIViewController {
         collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
         return collectionView
     }()
+
+    // MARK: - View life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,14 +37,16 @@ class SearchResultsViewController: UIViewController {
         super.viewDidLayoutSubviews()
         searchResultcollectionView.frame = view.bounds
     }
+
+    // MARK: Helper Methods
     func setupView() {
         view.addSubview(searchResultcollectionView)
         searchResultcollectionView.delegate = self
         searchResultcollectionView.dataSource = self
-//        navigationController?.navigationBar.barTintColor = .white
     }
 }
 
+// MARK: CollectionView DataSource and Delegate
 extension SearchResultsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.identifier, for: indexPath) as? TitleCollectionViewCell else {

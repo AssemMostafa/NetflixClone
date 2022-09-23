@@ -22,7 +22,7 @@ extension UIImageView {
             return
         }
 
-        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .gray)
+        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .large)
         addSubview(activityIndicator)
         activityIndicator.startAnimating()
         activityIndicator.center = self.center
