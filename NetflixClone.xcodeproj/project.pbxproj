@@ -161,7 +161,6 @@
 			children = (
 				C8563B1F28DD775F005B7246 /* Assets.xcassets */,
 				C8A561F028DC73530056B9E6 /* NetflixCloneModel.xcdatamodeld */,
-				C89BAB2428D841A3004D1580 /* Info.plist */,
 				C89BAB2128D841A3004D1580 /* LaunchScreen.storyboard */,
 				C89BAB1628D841A1004D1580 /* AppDelegate.swift */,
 				C89BAB1828D841A1004D1580 /* SceneDelegate.swift */,
@@ -188,6 +187,7 @@
 		C89BAB1528D841A1004D1580 /* NetflixClone */ = {
 			isa = PBXGroup;
 			children = (
+				C89BAB2428D841A3004D1580 /* Info.plist */,
 				C886F57728DD72BB008B90D8 /* Common */,
 				C8464B4228DC112300AE3D4C /* Controllers */,
 				C8464B3228DB87E900AE3D4C /* Extentions */,
