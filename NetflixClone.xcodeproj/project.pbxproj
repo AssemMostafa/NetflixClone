@@ -33,6 +33,8 @@
 		C8A561CC28DC315F0056B9E6 /* YoutubeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A561CB28DC315F0056B9E6 /* YoutubeResponse.swift */; };
 		C8A561F228DC73530056B9E6 /* NetflixCloneModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8A561F028DC73530056B9E6 /* NetflixCloneModel.xcdatamodeld */; };
 		C8A561F428DC7DC10056B9E6 /* DataPersistenceManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A561F328DC7DC10056B9E6 /* DataPersistenceManger.swift */; };
+		C8DCCCB928E2EF6200D206A6 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DCCCB828E2EF6200D206A6 /* Variable.swift */; };
+		C8DCCCBB28E2F6E800D206A6 /* UpComingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DCCCBA28E2F6E800D206A6 /* UpComingViewModel.swift */; };
 		C8EFD08228DDDF5100FE0484 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EFD08128DDDF5100FE0484 /* UIViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,8 @@
 		C8A561CB28DC315F0056B9E6 /* YoutubeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeResponse.swift; sourceTree = "<group>"; };
 		C8A561F128DC73530056B9E6 /* NetflixCloneModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetflixCloneModel.xcdatamodel; sourceTree = "<group>"; };
 		C8A561F328DC7DC10056B9E6 /* DataPersistenceManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPersistenceManger.swift; sourceTree = "<group>"; };
+		C8DCCCB828E2EF6200D206A6 /* Variable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		C8DCCCBA28E2F6E800D206A6 /* UpComingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpComingViewModel.swift; sourceTree = "<group>"; };
 		C8EFD08128DDDF5100FE0484 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +88,7 @@
 			children = (
 				C8464B3D28DC089C00AE3D4C /* TitleViewModel.swift */,
 				C8A561C928DC28790056B9E6 /* TitlePreviewViewModel.swift */,
+				C8DCCCB828E2EF6200D206A6 /* Variable.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -133,7 +138,7 @@
 			children = (
 				C8464B2428D86DDF00AE3D4C /* MainTabBarViewController.swift */,
 				C89BAB2E28D84453004D1580 /* HomeViewController.swift */,
-				C8464B1828D86D5700AE3D4C /* UpComingViewController.swift */,
+				C8DCCCBC28E2FFEC00D206A6 /* UpComing Page */,
 				C8464B1C28D86D7D00AE3D4C /* SearchViewController.swift */,
 				C8464B2028D86D9E00AE3D4C /* DownloadsViewController.swift */,
 			);
@@ -199,6 +204,15 @@
 				C8464B2628D888C700AE3D4C /* ViewModels */,
 			);
 			path = NetflixClone;
+			sourceTree = "<group>";
+		};
+		C8DCCCBC28E2FFEC00D206A6 /* UpComing Page */ = {
+			isa = PBXGroup;
+			children = (
+				C8464B1828D86D5700AE3D4C /* UpComingViewController.swift */,
+				C8DCCCBA28E2F6E800D206A6 /* UpComingViewModel.swift */,
+			);
+			path = "UpComing Page";
 			sourceTree = "<group>";
 		};
 		C8EFD07E28DD7B7D00FE0484 /* Network */ = {
@@ -283,10 +297,12 @@
 				C8464B3128DAF83C00AE3D4C /* Title.swift in Sources */,
 				C8A561CC28DC315F0056B9E6 /* YoutubeResponse.swift in Sources */,
 				C886F57628DD7236008B90D8 /* ApiConfig.swift in Sources */,
+				C8DCCCBB28E2F6E800D206A6 /* UpComingViewModel.swift in Sources */,
 				C8464B2B28DAE27500AE3D4C /* HeroHeaderView.swift in Sources */,
 				C8EFD08228DDDF5100FE0484 /* UIViewController.swift in Sources */,
 				C8464B2E28DAF44800AE3D4C /* APICaller.swift in Sources */,
 				C8A561F228DC73530056B9E6 /* NetflixCloneModel.xcdatamodeld in Sources */,
+				C8DCCCB928E2EF6200D206A6 /* Variable.swift in Sources */,
 				C8464B3828DB8E8D00AE3D4C /* TitleCollectionViewCell.swift in Sources */,
 				C89BAB1728D841A1004D1580 /* AppDelegate.swift in Sources */,
 				C8464B1E28D86D7D00AE3D4C /* SearchViewController.swift in Sources */,
