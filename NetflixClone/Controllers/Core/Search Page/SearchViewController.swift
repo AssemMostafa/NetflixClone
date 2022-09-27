@@ -11,8 +11,7 @@ import UIKit
 class SearchViewController: UIViewController {
 
     // MARK: Properties and outlets
-    private var titles = [Title]()
-
+    var viewModel = SearchViewModel()
     private let searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: SearchResultsViewController())
         controller.searchBar.placeholder = "Search for a Movie or Tv show"
@@ -26,18 +25,12 @@ class SearchViewController: UIViewController {
         return table
     }()
 
-    // MARK: Pagination
-    var isLoading = false
-     var currentpage: Int = 1
-    fileprivate var lastpage: Int = 1
-    fileprivate var totalpages: Int = 1
 
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        self.isLoading = true
-        fetchUpcoming(currentPage: currentpage)
+        setupViewModel()
     }
 
     override func viewDidLayoutSubviews() {
@@ -59,34 +52,23 @@ class SearchViewController: UIViewController {
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
     }
-    
+
+    private func setupViewModel() {
+        viewModel.titles.onUpdate = {[weak self] _ in
+            self?.discoverTable.reloadData()
+        }
+        viewModel.erorrHandler.onUpdate = { [weak self] _ in
+            guard let error  = self?.viewModel.erorrHandler.value else {return}
+            self?.showAlertmessage(with: error)
+        }
+        viewModel.isLoading = true
+        viewModel.fetchUpcoming(currentPage: viewModel.currentpage)
+    }
     private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel, titleModel: Title) {
         let vc = TitlePreviewViewController()
         vc.configure(with: ViewModel)
         vc.randomTrendingMovie = titleModel
         navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func fetchUpcoming(currentPage: Int) {
-        APICaller.shared.getDiscoverMovies(currentPage: currentPage) { [weak self] result in
-            switch result {
-            case.success(let response):
-                self?.isLoading = false
-                self?.totalpages = response.total_pages
-                if self?.currentpage != 1 {
-                    self?.titles += response.results
-                } else {
-                    self?.titles = response.results
-                }
-                DispatchQueue.main.async {
-                    self?.discoverTable.reloadData()
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.showAlertmessage(with: error.localizedDescription)
-                }
-            }
-        }
     }
 }
 
@@ -95,22 +77,22 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if indexPath.row >= self.titles.count - 3, currentpage < totalpages, currentpage != totalpages, !self.isLoading {
-                currentpage += 1
-                fetchUpcoming(currentPage: currentpage)
+            if indexPath.row >= viewModel.titles.value.count - 3, viewModel.currentpage < viewModel.totalpages, viewModel.currentpage != viewModel.totalpages, !viewModel.isLoading {
+                viewModel.currentpage += 1
+                viewModel.fetchUpcoming(currentPage: viewModel.currentpage)
             }
         }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titles.count
+        return viewModel.titles.value.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier, for: indexPath) as? TitleTableViewCell else {
             return UITableViewCell()
         }
-        let viewModel = titles[indexPath.row]
+        let viewModel = viewModel.titles.value[indexPath.row]
         cell.configure(with: TitleViewModel(posterURL: viewModel.poster_path, titleName: viewModel.original_title ?? "Unknown"))
         return cell
     }
@@ -120,7 +102,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let title = titles[indexPath.row]
+        let title = viewModel.titles.value[indexPath.row]
         guard let titleName = title.original_title else {
             return
         }

@@ -18,7 +18,6 @@ class UpComingViewController: UIViewController {
         return table
     }()
 
-
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +41,14 @@ class UpComingViewController: UIViewController {
         upComingTable.prefetchDataSource = self
         upComingTable.isPrefetchingEnabled = true
     }
-    
+
     private func setupViewModel() {
         viewModel.titles.onUpdate = { [weak self] _ in
             self?.upComingTable.reloadData()
         }
         viewModel.errorHandler.onUpdate = { [weak self] _ in
-            self?.showAlertmessage(with: self?.viewModel.errorHandler.value ?? "")
+            guard let error = self?.viewModel.errorHandler.value else {return}
+            self?.showAlertmessage(with: error)
         }
 
         viewModel.isLoading = true
