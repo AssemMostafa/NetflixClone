@@ -13,8 +13,8 @@ enum Sections: Int {
     case Popular = 2
     case Upcoming = 3
     case TopRated = 4
-
 }
+
 class HomeViewController: UIViewController {
 
     // MARK: Properties and outlets
@@ -88,10 +88,8 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
     }
 
-    private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel) {
-        let vc = TitlePreviewViewController()
-        vc.configure(with: ViewModel)
-        vc.randomTrendingMovie = self.randomTrendingMovie
+    private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel, title: Title) {
+        let vc = ViewControllerProvider.navigateToTitlePreviewVC(with: ViewModel, randomTrendingMovie: <#T##Title#>)
         navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -256,9 +254,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: CollectionViewTableViewCell Delegate
 
 extension HomeViewController: CollectionViewTableViewCellDelegate {
-    func CollectionViewTableViewCellDidTapCell(_cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel) {
+
+    func CollectionViewTableViewCellDidTapCell(_cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel, title: Title) {
         DispatchQueue.main.async {
-            self.navigateToTitlePreviewVC(with: viewModel)
+            self.navigateToTitlePreviewVC(with: viewModel, title: title)
         }
     }
 }
@@ -267,9 +266,7 @@ extension HomeViewController: CollectionViewTableViewCellDelegate {
 
 extension HomeViewController: HeroHeaderViewDelegate {
     func userDidTapOnPlayButton() {
-        guard let titleName = randomTrendingMovie?.original_title else {
-            return
-        }
+        guard let title = randomTrendingMovie, let titleName = randomTrendingMovie?.original_title else {return}
         APICaller.shared.getMovie(with: titleName) { [weak self] result in
             switch result {
             case .success(let videoElement):
@@ -277,7 +274,7 @@ extension HomeViewController: HeroHeaderViewDelegate {
                 guard let titleOverview = self?.randomTrendingMovie?.overview else {return}
                 let viewModel = TitlePreviewViewModel(title: titleName, youtubeView: videoElement, titleOverView: titleOverview)
                 DispatchQueue.main.async {
-                    strongSelf.navigateToTitlePreviewVC(with: viewModel)
+                    strongSelf.navigateToTitlePreviewVC(with: viewModel, title: title)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {

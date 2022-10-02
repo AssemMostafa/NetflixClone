@@ -56,9 +56,7 @@ class UpComingViewController: UIViewController {
     }
 
     private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel, titleModel: Title) {
-        let vc = TitlePreviewViewController()
-        vc.configure(with: ViewModel)
-        vc.randomTrendingMovie = titleModel
+        let vc = ViewControllerProvider.navigateToTitlePreviewVC(with: ViewModel, randomTrendingMovie: titleModel)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

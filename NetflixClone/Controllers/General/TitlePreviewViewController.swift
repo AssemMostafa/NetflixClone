@@ -11,8 +11,8 @@ import WebKit
 class TitlePreviewViewController: UIViewController {
 
     // MARK: Properties and outlets
-     var randomTrendingMovie: Title?
     var isCameFromDownloads = false
+    var viewModel: TitlePreviewViewModell!
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -52,6 +52,7 @@ class TitlePreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupViewModel()
     }
 
     // MARK: Helper Methods
@@ -64,6 +65,16 @@ class TitlePreviewViewController: UIViewController {
         view.addSubview(downloadButton)
         applyConstrains()
         downloadButton.isHidden = isCameFromDownloads
+    }
+
+    private func setupViewModel() {
+        viewModel.succesDownloadMovie.onUpdate = { [weak self] _ in
+            NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+        }
+        viewModel.errorHandler.onUpdate = { [weak self] _ in
+            guard let error = self?.viewModel.errorHandler.value else {return}
+            self?.showAlertmessage(with: error)
+        }
     }
 
     private func applyConstrains() {
@@ -106,25 +117,11 @@ class TitlePreviewViewController: UIViewController {
         webView.load(URLRequest(url: url))
     }
 
-    private func downloadTitleAt(viewModel: Title) {
-        DataPersistenceManger.shared.downloadTitle(with: viewModel) { result in
-            switch result {
-            case .success():
-                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
-            case .failure(let error) :
-                DispatchQueue.main.async {
-                    self.showAlertmessage(with: error.localizedDescription)
-                }
-            }
-        }
-    }
 
     // MARK: Actions
     @objc func downloadButtonPressed(sender: UIButton!) {
-        guard let title = randomTrendingMovie else {
-            return
-        }
-        downloadTitleAt(viewModel: title)
+         let title = self.viewModel.randomTrendingMovie
+        self.viewModel.downloadTitleAt(viewModel: title)
     }
 
 }
