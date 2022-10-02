@@ -89,7 +89,7 @@ class HomeViewController: UIViewController {
     }
 
     private func navigateToTitlePreviewVC(with ViewModel: TitlePreviewViewModel, title: Title) {
-        let vc = ViewControllerProvider.navigateToTitlePreviewVC(with: ViewModel, randomTrendingMovie: <#T##Title#>)
+        let vc = ViewControllerProvider.navigateToTitlePreviewVC(with: ViewModel, randomTrendingMovie: title)
         navigationController?.pushViewController(vc, animated: true)
     }
 

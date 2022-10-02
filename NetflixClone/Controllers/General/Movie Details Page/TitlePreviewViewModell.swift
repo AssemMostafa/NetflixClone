@@ -1,11 +1,12 @@
 //
-//  TitlePreviewViewModel.swift
+//  TitlePreviewViewModell.swift
 //  NetflixClone
 //
-//  Created by Assem on 01/10/2022.
+//  Created by Assem on 02/10/2022.
 //
 
 import Foundation
+
 
 class TitlePreviewViewModell {
 
